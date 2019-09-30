@@ -92,7 +92,7 @@ void display_results(int nrates, double *theta, double branch_scale)
 
 
 SEXP R_clmp(SEXP nwk, SEXP nrates_arg, SEXP bounds_arg, SEXP trace_arg, 
-            SEXP tol_arg, SEXP tolhist_arg, SEXP seed_arg) {
+            SEXP tol_arg, SEXP tolhist_arg, SEXP seed_arg, SEXP crank_arg) {
     /*
      Implement MMPP method
      @arg nwk:  <input> Newick tree string
@@ -102,10 +102,12 @@ SEXP R_clmp(SEXP nwk, SEXP nrates_arg, SEXP bounds_arg, SEXP trace_arg,
      @arg trace_arg:  <input> integer, write verbose output to stderr
                       if >0.  Also used to set the log interval.
      @arg tol_arg:  <input> double, set tolerance for CMA-ES method
+     @arg crank_arg:  <input> int, the minimum rank of the assigned rate necessary for clustering 
      */
     SEXP result, cindex, sindex, names, loglik, mle_rates, mle_trans;
 
     int nrates = (int) REAL(nrates_arg)[0];
+    int crank = (int) REAL(crank_arg)[0];
     int trace = (int) REAL(trace_arg)[0];
     double tol = (double) REAL(tol_arg)[0];
     double tolhist = (double) REAL(tolhist_arg)[0];
@@ -168,7 +170,7 @@ SEXP R_clmp(SEXP nwk, SEXP nrates_arg, SEXP bounds_arg, SEXP trace_arg,
     }
     
 
-    get_clusters(tree, states, clusters, 1);
+    get_clusters(tree, states, clusters, crank);
     for (i = 0; i < nnodes; ++i) {
         INTEGER(cindex)[i] = clusters[i];
         INTEGER(sindex)[i] = states[i];
