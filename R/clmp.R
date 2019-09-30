@@ -9,7 +9,6 @@ clmp <- function(tree, nrates=2, bounds=c(0, 1e4, 0, 1e3),
                  trace=FALSE, nsites=NA, min.bl=0.2, tol=1e-3, 
                  tolhist=1e-3, seed=0, crank=1) {
   # @param tree:  object of class "phylo" (ape package)
-  # @param crank: The minimum rank of the assigned rate necessary for clustering
   # @param nrates:  number of lineage birth rate classes
   # @param bounds:  vector of length 4, for lower and upper bounds of 
   #                 birth and transition rates, respectively.
@@ -19,6 +18,7 @@ clmp <- function(tree, nrates=2, bounds=c(0, 1e4, 0, 1e3),
   # @param tol:  tolerance in objective function for CMA-ES algorithm
   # @param tolhist:  tolerance in change history of objective function
   # @param seed:  set random seed for CMA-ES method, default 0 sets random seed
+  # @param crank: The minimum rank of the assigned rate necessary for clustering
   
   # make sure <tree> is an object of class "phylo"
   if (class(tree) != 'phylo') {
