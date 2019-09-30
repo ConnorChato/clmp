@@ -80,8 +80,8 @@ clmp <- function(tree, nrates=2, bounds=c(0, 1e4, 0, 1e3),
   nwk <- write.tree(tree2)
 
   res <- .Call("R_clmp", 
-               nwk, nrates, bounds, as.double(trace), crank,
-               as.double(tol), as.double(tolhist), seed,
+               nwk, nrates, bounds, as.double(trace), 
+               as.double(tol), as.double(tolhist), seed, crank,
                PACKAGE='clmp')
   
   # unpack outputs
